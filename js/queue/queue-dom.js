@@ -17,8 +17,12 @@ const clearQueueInput = () => {
 }
 
 const generateListQueue = () => {
-  // ... your code goes here
-  for (i = 1; i <= newStack.MAX_SIZE; i++) {
+  // Create placeholders for the maximum number of items the
+  // queue can handle. The original implementation attempted
+  // to access `newStack.MAX_SIZE`, which doesn't exist in this
+  // context and resulted in a runtime error when rendering the
+  // queue. Use the queue instance's `MAX_SIZE` instead.
+  for (let i = 1; i <= queue.MAX_SIZE; i++) {
     const newLi = document.createElement("li")
     newLi.classList.add("inactive")
     queueUL.appendChild(newLi)
@@ -62,9 +66,11 @@ const removeFromQueue = () => {
   const lastItems = document.querySelectorAll(".list-queue .active")
   if (lastItems.length >= 1) {
     lastItems[0].remove()
-    newLi = document.createElement("li")
+    let newLi = document.createElement("li")
     newLi.className = "inactive"
-    queueUL.insertBefore(newLi, queueUL.childNodes[queueUL.length - 1])
+    // Append the placeholder element at the end of the list to keep
+    // the visual representation aligned with the queue's capacity.
+    queueUL.appendChild(newLi)
 
     queue.dequeue()
 

@@ -66,7 +66,12 @@ const removeFromStack = () => {
     lastItems[lastItems.length - 1].classList.remove("active")
     lastItems[lastItems.length - 1].classList.add("inactive")
 
-    newStack.dequeue()
+    // Remove the top element from the data structure
+    // Using "dequeue" here would raise an error since stacks
+    // expose a `pop` method instead. This bug prevented the DOM
+    // from synchronizing with the underlying StackDataStructure
+    // and threw a runtime exception when removing items.
+    newStack.pop()
     clearStackInput()
   } else {
     generateWarningStack("underflow")
